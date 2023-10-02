@@ -49,6 +49,12 @@
       </div>
     </li> --}}
     <li class="nav-item">
+      <a class="nav-link" href="{{route('admin.bank')}}">
+        <span class="menu-title">Banking</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="">
         <span class="menu-title">Setting</span>
         <i class="mdi mdi-contacts menu-icon"></i>
