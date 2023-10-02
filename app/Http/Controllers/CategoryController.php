@@ -49,6 +49,7 @@ class CategoryController extends Controller
             'category_type' => $request->input('category_type'),
         ]);
 
+        
 
         return response()->json(['message' => 'Category updated successfully']);
     }

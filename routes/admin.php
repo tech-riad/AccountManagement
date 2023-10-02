@@ -34,8 +34,8 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/accounts', [AccountsController::class, 'index'])->name('admin.accounts');
     Route::post('/accounts/store', [AccountsController::class, 'store'])->name('admin.accounts.store');
-    Route::put('/accounts/{product}', [AccountsController::class, 'update'])->name('accounts.update');
-    Route::delete('/accounts/{product}', [AccountsController::class, 'destroy'])->name('accounts.destroy');
+    Route::put('/accounts/{account}', [AccountsController::class, 'update'])->name('accounts.update');
+    Route::delete('/accounts/{account}', [AccountsController::class, 'destroy'])->name('accounts.destroy');
 
 
 

@@ -5,38 +5,49 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Accounts</h4>
-            <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw " data-bs-toggle="modal" data-bs-target="#addModal">Add Category</button>
+            <h4 class="card-title">Transction</h4>
+            <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw " data-bs-toggle="modal" data-bs-target="#addModal">Add Transction</button>
 
             <table class="table table-striped">
               <thead>
                 <tr>
                   <th> Date </th>
+                  <th> Customer Name</th>
                   <th> Account Method </th>
-                  <th> Type </th>
+                  <th> Amount</th>
+                  <th> Created By</th>
+                  <th> Transction By</th>
+                  <th> Transction Type</th>
+                  <th> Product name</th>
+                  <th> Description</th>
                   <th> Action </th>
                 </tr>
               </thead>
               <tbody>
-                {{-- @foreach($category as $item)
+                @foreach($accounts as $item)
                 <tr>
-                  <td> {{ $item->category_name }} </td>
-                  <td> {{ $item->category_type }} </td>
+                  <td> {{ @$item->payment_date }} </td>
+                  <td> {{ @$item->customer_name }} </td>
+                  <td> {{ @$item->bank->method_name }} </td>
+                  <td> {{ @$item->amount }} </td>
+                  <td> {{ @$item->created_by }} </td>
+                  <td> {{ @$item->received_by }} </td>
+                  <td> {{ @$item->transaction_type }} </td>
+                  <td> {{ @$item->product->product_name }} </td>
+                  <td> {{ @$item->description }} </td>
                   <td>
                     <div class="actions ml-3">
-                        <a href="#" class="action-item customModal" data-toggle="modal" data-target="#editModal" data-category="{{ $item }}" data-original-title="Edit">
+                        <a href="#" class="action-item customModal" data-toggle="modal" data-target="#editModal" data-accounts="{{ $item }}" data-original-title="Edit">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a href="#" class="action-item deleteCategory" data-category-id="{{ $item->id }}" data-original-title="Delete">
+                        {{-- <a href="#" class="action-item deleteCategory" data-category-id="{{ $item->id }}" data-original-title="Delete">
                             <i class="fas fa-trash-alt"></i>
-                        </a>
+                        </a> --}}
 
                     </div>
                   </td>
                 </tr>
-                @endforeach --}}
-
-
+                @endforeach
               </tbody>
             </table>
           </div>
@@ -51,27 +62,86 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Category</h5>
+                <h5 class="modal-title" id="editModalLabel">Edit Transction</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editCategoryForm">
+                <form id="editTransctionForm">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="category_id" id="editCategoryId">
-                    <div class="form-group">
-                        <label for="editCategoryName">Category Name</label>
-                        <input type="text" name="category_name" id="editCategoryName" class="form-control" required>
+                    <input type="hidden" name="transction_id" id="editTransctionId">
+                    <div class="row">
+                        <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="editTransctionType">Transction Type</label>
+                            <select name="transaction_type" id="editTransctionType" class="form-select" required>
+                                <option value="income">Income</option>
+                                <option value="expense">Expense</option>
+                            </select>
+                        </div>
+                        </div>
+                        <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="editBankaAccountMethod">Transction Method Method</label>
+                                    <select name="account_method" id="editBankaAccountMethod" class="form-select" required>
+                                        @foreach ($bank as $item)
+                                        <option value="{{$item->id}}">{{$item->method_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="editCustomerName">Customer Name</label>
+                                <input type="text" name="customer_name" id="editCustomerName" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="editPaymentDate">Payment Date</label>
+                                <input class="form-control" name="payment_date"  type="date" value="" id="editPaymentDate">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="editAmount">Amount</label>
+                                <input type="number" id="editAmount" name="amount" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="editCreatedBy">Created By</label>
+                                <input type="text" name="created_by" id="editCreatedBy" class="form-control" value="{{Auth::user()->name}}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="editReceivedBy">Transction By</label>
+                                <input type="text" id="editReceivedBy" name="received_by" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="etitProductName">Product Name</label>
+                                <select name="product_name" id="etitProductName" class="form-select" required>
+                                    @foreach ($product as $item)
+                                    <option value="{{$item->id}}">{{$item->product_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="editDescription">Description</label>
+                                <textarea class="form-control" name="description" id="editDescription"
+                                    rows="3"></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="editCategoryType">Category Type</label>
-                        <select name="category_type" id="editCategoryType" class="form-select" required>
-                            <option value="income">Income</option>
-                            <option value="expense">Expense</option>
-                        </select>
-                    </div>
-                    <button type="button" id="updateCategoryBtn" class="btn btn-primary">Update Category</button>
+                    <button type="button" id="editTransaction" class="btn btn-primary">Update Trasction</button>
                 </form>
+
             </div>
 
         </div>
@@ -84,7 +154,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addModalLabel">Category Add</h5>
+          <h5 class="modal-title" id="addModalLabel">Transction Add</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -93,28 +163,34 @@
                     @csrf
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="product_name">Product Name</label>
-                                <input type="text" id="product_name" class="form-control" required>
-                            </div>
+                        <div class="form-group">
+                            <label for="transctionType">Transction Type</label>
+                            <select name="transaction_type" id="transctionType" class="form-select" required>
+                                <option value="income">Income</option>
+                                <option value="expense">Expense</option>
+                            </select>
+                        </div>
                         </div>
                         <div class="col-lg-6">
-
-                            <div class="form-group">
-                                <label for="account_method">Method Name</label>
-                                <input type="text" id="account_method" class="form-control" required>
-                            </div>
+                                <div class="form-group">
+                                    <label for="bankaAccountMethod">Transction Method Method</label>
+                                    <select name="account_method" id="accountMethod" class="form-select" required>
+                                        @foreach ($bank as $item)
+                                        <option value="{{$item->id}}">{{$item->method_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="customer_name">Customer Name</label>
-                                <input type="text" id="customer_name" class="form-control" required>
+                                <input type="text" name="customer_name" id="customerName" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="payment_date">Payment Date</label>
-                                <input class="form-control" required="required" name="payment_date" type="date" value="" id="payment_date">
+                                <input class="form-control" name="payment_date" required="required" type="date" value="" id="paymentDate">
                             </div>
                         </div>
 
@@ -127,29 +203,34 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="created_by">Created By</label>
-                                <input type="text" id="created_by" class="form-control" required>
+                                <input type="text" name="created_by" id="createdBy" class="form-control" value="{{Auth::user()->name}}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="received_by">Transction By</label>
+                                <input type="text" id="receivedBy" name="received_by" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="productName">Product Name</label>
+                                <select name="product_name" id="productName" class="form-select" required>
+                                    @foreach ($product as $item)
+                                    <option value="{{$item->id}}">{{$item->product_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="description">Description</label>
-                                <textarea class="form-control" name="description"
+                                <textarea class="form-control" name="description" id="description"
                                     rows="3"></textarea>
                             </div>
                         </div>
                     </div>
-
-
-
-
-                    {{-- <div class="form-group">
-                        <label for="category_type">Category Type</label>
-                        <select id="category_type" class="form-select" required>
-                            <option value="income">Income</option>
-                            <option value="expense">Expense</option>
-                        </select>
-                    </div> --}}
-                    <button type="button" id="createCategory" class="btn btn-primary">Create Category</button>
+                    <button type="button" id="createTransaction" class="btn btn-primary">Create Trasction</button>
                 </form>
 
             </div>
@@ -161,6 +242,82 @@
 @endsection
 
 @push('js')
+<!-- Include jQuery library if not already included -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#createTransaction').on('click', function() {
+            $.ajax({
+                url: "{{ route('admin.accounts.store') }}",
+                method: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    transaction_type: $('#transctionType').val(),
+                    account_method: $('#accountMethod').val(),
+                    customer_name: $('#customerName').val(),
+                    payment_date: $('#paymentDate').val(),
+                    amount: $('#amount').val(),
+                    created_by: $('#createdBy').val(),
+                    received_by: $('#receivedBy').val(),
+                    product_name: $('#productName').val(),
+                    description: $('#description').val()
+                },
+                success: function(response) {
+                    console.log(response);
+                    $('#addModal').modal('hide');
+                    location.reload();
+                    alert('Transaction created successfully');
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+   $(document).ready(function() {
+    $('.customModal').click(function(e) {
+        e.preventDefault();
+        var transaction = $(this).data('accounts');
+        $('#editTransctionId').val(transaction.id);
+        $('#editTransctionType').val(transaction.transaction_type);
+        $('#editBankaAccountMethod').val(transaction.account_method);
+        $('#editCustomerName').val(transaction.customer_name);
+        $('#editPaymentDate').val(transaction.payment_date);
+        $('#editAmount').val(transaction.amount);
+        $('#editReceivedBy').val(transaction.received_by);
+        $('#etitProductName').val(transaction.product_name);
+        $('#editDescription').val(transaction.description);
+        $('#editModal').modal('show');
+    });
+
+    $('#editTransaction').click(function() {
+        var formData = $('#editTransctionForm').serialize();
+        var transactionId = $('#editTransctionId').val();
+
+        $.ajax({
+            url: "/admin/accounts/" + transactionId,
+            method: 'PUT',
+            data: formData,
+            success: function(response) {
+                alert('Transaction Updated Successfully');
+                location.reload();
+                $('#editModal').modal('hide');
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    });
+});
+
+</script>
+
+
+
 
 @endpush
 
