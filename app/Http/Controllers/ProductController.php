@@ -32,19 +32,20 @@ class ProductController extends Controller
 
         public function update(Request $request, Product $product)
         {
+            try {
+                $request->validate([
+                    'product_name' => 'required|string|max:255',
+                ]);
 
-            $request->validate([
-                'product_name' => 'string',
-            ]);
+                // Update product data
+                $product->product_name = $request->input('product_name');
+                $product->slug = Str::slug($request->input('product_name'));
+                $product->save();
 
-
-            $product->update([
-                'product_name' => $request->input('product_name'),
-                'slug'          => Str::slug($request->input('product_name')),
-            ]);
-
-
-            return response()->json(['message' => 'Product updated successfully']);
+                return response()->json(['message' => 'Product updated successfully']);
+            } catch (\Exception $e) {
+                return response()->json(['error' => 'An error occurred while updating the product.'], 500);
+            }
         }
 
         public function destroy(Product $product)

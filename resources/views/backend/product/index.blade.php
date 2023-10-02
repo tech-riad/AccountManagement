@@ -58,15 +58,15 @@
                     <input type="hidden" name="product_id" id="editProductId">
                     <div class="form-group">
                         <label for="editProductName">Product Name</label>
-                        <input type="text" name="product_name" id="editProductName" class="form-control" >
+                        <input type="text" name="product_name" id="editProductName" class="form-control">
                     </div>
-                    <button type="button" id="updateProductBtn" class="btn btn-primary">Update Product</button>
+                    <button type="button" id="updateProductBtn" class="btn btn-primary" data-bs-dismiss="modal">Update Product</button>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
+
 
 
   <!-- Modal -->
@@ -160,20 +160,19 @@
 
 <script>
     $(document).ready(function() {
-    $('.deleteCategory').click(function(e) {
+    $('.deleteProduct').click(function(e) {
         e.preventDefault();
-        var categoryId = $(this).data('category-id');
+        var productId = $(this).data('product-id');
 
         $.ajax({
-            url: "{{ route('categories.destroy', '') }}" + '/' + categoryId,
+            url: "{{ route('products.destroy', '') }}" + '/' + productId,
             method: 'DELETE',
             data: {
                 _token: "{{ csrf_token() }}"
             },
             success: function(response) {
-                alert('Categories Deleted Successfully');
-                location.reload();
-                $(this).closest('tr').remove();
+                alert('Product Deleted Successfully');
+                location.reload(); 
             },
             error: function(error) {
                 console.error(error);
@@ -181,8 +180,8 @@
         });
     });
 });
-
 </script>
+
 @endpush
 
 
