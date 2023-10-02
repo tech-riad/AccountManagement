@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('account_method');
+            $table->string('account_method', 255);
             $table->string('customer_name');
             $table->date('payment_date');
             $table->decimal('amount', 10, 2);
-            $table->string('category_type');
             $table->string('created_by');
-            $table->longText('description');
-            $table->string('product_name');
+            $table->longtext('description');
+            $table->string('category_type')->nullable();
+            $table->foreignId('product_name')->nullable();
             $table->timestamps();
+
         });
     }
 
