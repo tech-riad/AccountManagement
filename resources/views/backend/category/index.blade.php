@@ -8,7 +8,7 @@
             <h4 class="card-title">All Category</h4>
             <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw " data-bs-toggle="modal" data-bs-target="#addModal">Add Category</button>
 
-            <table class="table table-striped">
+            <table id="example" class="table table-striped table-bordered">
               <thead>
                 <tr>
                   <th> Category </th>
@@ -113,7 +113,7 @@
 @endsection
 
 @push('js')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 <script>
     $(document).ready(function() {
         $('#createCategory').on('click', function() {

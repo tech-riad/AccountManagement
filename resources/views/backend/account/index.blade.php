@@ -8,7 +8,7 @@
             <h4 class="card-title">Transction</h4>
             <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw " data-bs-toggle="modal" data-bs-target="#addModal">Add Transction</button>
 
-            <table class="table table-striped">
+            <table id="example" class="table table-striped table-bordered">
               <thead>
                 <tr>
                   <th> Date </th>
@@ -243,7 +243,7 @@
 
 @push('js')
 <!-- Include jQuery library if not already included -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
 <script>
     $(document).ready(function() {
@@ -303,7 +303,6 @@
             method: 'PUT',
             data: formData,
             success: function(response) {
-                alert('Transaction Updated Successfully');
                 location.reload();
                 $('#editModal').modal('hide');
             },
@@ -313,11 +312,7 @@
         });
     });
 });
-
 </script>
-
-
-
 
 @endpush
 

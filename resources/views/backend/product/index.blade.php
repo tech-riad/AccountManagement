@@ -8,7 +8,7 @@
             <h4 class="card-title">All Product</h4>
             <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw " data-bs-toggle="modal" data-bs-target="#addModal">Add Category</button>
 
-            <table class="table table-striped">
+            <table id="example" class="table table-striped table-bordered">
               <thead>
                 <tr>
                   <th> Product Name</th>
@@ -172,7 +172,7 @@
             },
             success: function(response) {
                 alert('Product Deleted Successfully');
-                location.reload(); 
+                location.reload();
             },
             error: function(error) {
                 console.error(error);

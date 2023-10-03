@@ -8,11 +8,11 @@
             <h4 class="card-title">All Bank</h4>
             <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw " data-bs-toggle="modal" data-bs-target="#addModal">Add Banking Method</button>
 
-            <table class="table table-striped">
+            <table id="example" class="table table-striped table-bordered " style="padding-top:20px;">
               <thead>
                 <tr>
                   <th> Bank Method Name </th>
-                  <th> Type </th>
+
                   <th> Action </th>
                 </tr>
               </thead>
