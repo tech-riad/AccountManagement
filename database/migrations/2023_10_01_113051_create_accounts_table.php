@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('transaction_type')->nullable();
             $table->longtext('description')->nullable();
             $table->unsignedBigInteger('product_name')->nullable();
+            $table->enum('status', ['paid', 'canceled','pending'])->default('pending');
             $table->timestamps();
 
         });

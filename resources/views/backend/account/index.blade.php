@@ -13,13 +13,11 @@
                 <tr>
                   <th> Date </th>
                   <th> Customer Name</th>
+                  <th> Product name</th>
                   <th> Account Method </th>
                   <th> Amount</th>
-                  <th> Created By</th>
-                  <th> Transction By</th>
                   <th> Transction Type</th>
-                  <th> Product name</th>
-                  <th> Description</th>
+                  <th> Status</th>
                   <th> Action </th>
                 </tr>
               </thead>
@@ -28,13 +26,20 @@
                 <tr>
                   <td> {{ @$item->payment_date }} </td>
                   <td> {{ @$item->customer_name }} </td>
+                  <td> {{ @$item->product->product_name }} </td>
                   <td> {{ @$item->bank->method_name }} </td>
                   <td> {{ @$item->amount }} </td>
-                  <td> {{ @$item->created_by }} </td>
-                  <td> {{ @$item->received_by }} </td>
                   <td> {{ @$item->transaction_type }} </td>
-                  <td> {{ @$item->product->product_name }} </td>
-                  <td> {{ @$item->description }} </td>
+                  <td>
+                        @if ($item->status == 'paid')
+                         <div class="badge badge-success">Paid</div>
+                        @elseif($item->status == 'pending')
+                         <div class="badge badge-danger">Pending</div>
+                        @elseif($item->status == 'canceled')
+                         <div class="badge badge-warning text-dark">Canceled</div>
+                        @endif
+                  </td>
+
                   <td>
                     <div class="actions ml-3">
                         <a href="#" class="action-item customModal" data-toggle="modal" data-target="#editModal" data-accounts="{{ $item }}" data-original-title="Edit">
@@ -131,6 +136,16 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                               <label for="status">Status</label>
+                               <select name="status" id="statusType" class="form-select" >
+                                   <option value="pending">Pending</option>
+                                   <option value="paid">Paid</option>
+                                   <option value="canceled">Canceled</option>
+                               </select>
+                            </div>
+                        </div>
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="editDescription">Description</label>
@@ -163,13 +178,13 @@
                     @csrf
                     <div class="row">
                         <div class="col-lg-6">
-                        <div class="form-group">
+                         <div class="form-group">
                             <label for="transctionType">Transction Type</label>
                             <select name="transaction_type" id="transctionType" class="form-select" required>
                                 <option value="income">Income</option>
                                 <option value="expense">Expense</option>
                             </select>
-                        </div>
+                         </div>
                         </div>
                         <div class="col-lg-6">
                                 <div class="form-group">
@@ -222,6 +237,16 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                               <label for="status">Status</label>
+                               <select name="status" id="statusType" class="form-select" >
+                                   <option value="pending">Pending</option>
+                                   <option value="paid">Paid</option>
+                                   <option value="canceled">Canceled</option>
+                               </select>
+                            </div>
+                        </div>
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="description">Description</label>
@@ -261,6 +286,7 @@
                     created_by: $('#createdBy').val(),
                     received_by: $('#receivedBy').val(),
                     product_name: $('#productName').val(),
+                    status: $('#statusType').val(),
                     description: $('#description').val()
                 },
                 success: function(response) {
@@ -290,6 +316,7 @@
         $('#editAmount').val(transaction.amount);
         $('#editReceivedBy').val(transaction.received_by);
         $('#etitProductName').val(transaction.product_name);
+        $('#statusType').val(transaction.status);
         $('#editDescription').val(transaction.description);
         $('#editModal').modal('show');
     });

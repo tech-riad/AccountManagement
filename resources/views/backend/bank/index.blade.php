@@ -12,7 +12,6 @@
               <thead>
                 <tr>
                   <th> Bank Method Name </th>
-
                   <th> Action </th>
                 </tr>
               </thead>
