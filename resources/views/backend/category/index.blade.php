@@ -127,11 +127,11 @@
                 },
                 success: function(response) {
 
+                    toastr.success(response);
                     console.log(response);
 
                     $('#addModal').modal('hide');
-                    location.reload();
-                    alert('Category created successfully');
+                    // location.reload();
                 },
                 error: function(error) {
                     console.error(error);

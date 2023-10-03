@@ -27,6 +27,7 @@ class CategoryController extends Controller
         $category->slug = Str::slug($category->category_name);
         $category->category_type = $validatedData['category_type'];
         $category->save();
+        
 
         return response()->json(['message' => 'Category created successfully', 'category' => $category], 201);
     }
@@ -49,7 +50,7 @@ class CategoryController extends Controller
             'category_type' => $request->input('category_type'),
         ]);
 
-        
+
 
         return response()->json(['message' => 'Category updated successfully']);
     }
