@@ -110,11 +110,13 @@
                 },
                 success: function(response) {
 
-                    console.log(response);
+                    toastr.info('Account Method Created Successfully');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
 
                     $('#addModal').modal('hide');
-                    location.reload();
-                    alert('Bank created successfully');
+
                 },
                 error: function(error) {
                     console.error(error);
@@ -142,8 +144,10 @@
                 method: 'PUT',
                 data: formData,
                 success: function(response) {
-                    alert('Bank Method Name Updated Successfully');
-                    location.reload();
+                    toastr.success('Account Method Updated Successfully');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                     $('#editModal').modal('hide');
                 },
                 error: function(error) {
@@ -159,6 +163,7 @@
     $('.deleteBank').click(function(e) {
         e.preventDefault();
         var bankId = $(this).data('bank-id');
+        var deleteButton = $(this); 
 
         $.ajax({
             url: "{{ route('bank.destroy', '') }}" + '/' + bankId,
@@ -167,9 +172,10 @@
                 _token: "{{ csrf_token() }}"
             },
             success: function(response) {
-                alert('Bank Deleted Successfully');
-                location.reload();
-                $(this).closest('tr').remove();
+                toastr.warning('Deleted Successfully');
+                    setTimeout(function() {
+                        deleteButton.closest('tr').remove();
+                    }, 2000);
             },
             error: function(error) {
                 console.error(error);

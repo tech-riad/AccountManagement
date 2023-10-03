@@ -45,9 +45,9 @@
                         <a href="#" class="action-item customModal" data-toggle="modal" data-target="#editModal" data-accounts="{{ $item }}" data-original-title="Edit">
                             <i class="fas fa-edit"></i>
                         </a>
-                        {{-- <a href="#" class="action-item deleteCategory" data-category-id="{{ $item->id }}" data-original-title="Delete">
+                        <a href="#" class="action-item deleteAccount" data-account-id="{{ $item->id }}" data-original-title="Delete">
                             <i class="fas fa-trash-alt"></i>
-                        </a> --}}
+                        </a>
 
                     </div>
                   </td>
@@ -292,8 +292,10 @@
                 success: function(response) {
                     console.log(response);
                     $('#addModal').modal('hide');
-                    location.reload();
-                    alert('Transaction created successfully');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                    toastr.info('Transaction created successfully');
                 },
                 error: function(error) {
                     console.error(error);
@@ -330,7 +332,11 @@
             method: 'PUT',
             data: formData,
             success: function(response) {
-                location.reload();
+
+                toastr.success('Transaction Updated successfully');
+                setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                 $('#editModal').modal('hide');
             },
             error: function(error) {
@@ -339,6 +345,34 @@
         });
     });
 });
+</script>
+
+<script>
+    $(document).ready(function() {
+    $('.deleteAccount').click(function(e) {
+        e.preventDefault();
+        var accountId = $(this).data('account-id');
+        var deleteButton = $(this);
+
+        $.ajax({
+            url: "{{ route('accounts.destroy', '') }}" + '/' + accountId,
+            method: 'DELETE',
+            data: {
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(response) {
+                toastr.warning(' Transction Deleted Successfully');
+                    setTimeout(function() {
+                        deleteButton.closest('tr').remove();
+                    }, 2000);
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    });
+});
+
 </script>
 
 @endpush

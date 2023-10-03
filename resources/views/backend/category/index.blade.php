@@ -127,11 +127,13 @@
                 },
                 success: function(response) {
 
-                    toastr.success(response);
-                    console.log(response);
+                    toastr.success('Categories Created Successfully');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
 
                     $('#addModal').modal('hide');
-                    // location.reload();
+
                 },
                 error: function(error) {
                     console.error(error);
@@ -162,8 +164,10 @@
                 method: 'PUT',
                 data: formData,
                 success: function(response) {
-                    alert('Categories Updated Successfully');
-                    location.reload();
+                    toastr.success('Categories Updated Successfully');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                     $('#editModal').modal('hide');
                 },
                 error: function(error) {
@@ -173,34 +177,35 @@
         });
     });
 
-
 </script>
 
 <script>
     $(document).ready(function() {
-    $('.deleteCategory').click(function(e) {
-        e.preventDefault();
-        var categoryId = $(this).data('category-id');
+        $('.deleteCategory').click(function(e) {
+            e.preventDefault();
+            var categoryId = $(this).data('category-id');
+            var deleteButton = $(this); 
 
-        $.ajax({
-            url: "{{ route('categories.destroy', '') }}" + '/' + categoryId,
-            method: 'DELETE',
-            data: {
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(response) {
-                alert('Categories Deleted Successfully');
-                location.reload();
-                $(this).closest('tr').remove();
-            },
-            error: function(error) {
-                console.error(error);
-            }
+            $.ajax({
+                url: "{{ route('categories.destroy', '') }}" + '/' + categoryId,
+                method: 'DELETE',
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    toastr.warning('Category Deleted Successfully');
+                    setTimeout(function() {
+                        deleteButton.closest('tr').remove();
+                    }, 2000);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
         });
     });
-});
-
 </script>
+
 @endpush
 
 

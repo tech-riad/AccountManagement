@@ -6,7 +6,7 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">All Product</h4>
-            <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw " data-bs-toggle="modal" data-bs-target="#addModal">Add Category</button>
+            <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw " data-bs-toggle="modal" data-bs-target="#addModal">Add Product</button>
 
             <table id="example" class="table table-striped table-bordered">
               <thead>
@@ -97,7 +97,7 @@
 @endsection
 
 @push('js')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 <script>
     $(document).ready(function() {
         $('#createProduct').on('click', function() {
@@ -113,8 +113,11 @@
                     console.log(response);
 
                     $('#addModal').modal('hide');
-                    location.reload();
-                    alert('Product created successfully');
+                    toastr.info('Product created successfully');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+
                 },
                 error: function(error) {
                     console.error(error);
@@ -144,8 +147,10 @@
                 method: 'PUT',
                 data: formData,
                 success: function(response) {
-                    alert('Products Updated Successfully');
-                    location.reload();
+                    toastr.success('Products Updated Successfully');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                     $('#editModal').modal('hide');
                 },
                 error: function(error) {
@@ -163,6 +168,7 @@
     $('.deleteProduct').click(function(e) {
         e.preventDefault();
         var productId = $(this).data('product-id');
+        var deleteButton = $(this);
 
         $.ajax({
             url: "{{ route('products.destroy', '') }}" + '/' + productId,
@@ -171,8 +177,10 @@
                 _token: "{{ csrf_token() }}"
             },
             success: function(response) {
-                alert('Product Deleted Successfully');
-                location.reload();
+                toastr.warning('Product Deleted Successfully');
+                    setTimeout(function() {
+                        deleteButton.closest('tr').remove();
+                    }, 2000);
             },
             error: function(error) {
                 console.error(error);

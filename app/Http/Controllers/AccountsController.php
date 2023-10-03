@@ -71,4 +71,11 @@ class AccountsController extends Controller
         return response()->json(['message' => 'Transaction updated successfully']);
     }
 
+    public function destroy(Accounts $account)
+    {
+        $account->delete();
+
+        return response()->json(['message' => 'Account Method deleted successfully']);
+    }
+
 }
