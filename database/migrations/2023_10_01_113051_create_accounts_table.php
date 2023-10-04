@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('account_method');
             $table->string('customer_name');
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('transaction_type_id')->nullable();
             $table->date('payment_date');
             $table->decimal('amount', 10, 2);
             $table->string('created_by');
             $table->string('received_by');
-            $table->string('transaction_type')->nullable();
             $table->longtext('description')->nullable();
             $table->unsignedBigInteger('product_name')->nullable();
             $table->enum('status', ['paid', 'canceled','pending'])->default('pending');

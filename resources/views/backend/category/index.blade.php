@@ -20,7 +20,7 @@
                 @foreach($category as $item)
                 <tr>
                   <td> {{ $item->category_name }} </td>
-                  <td> {{ $item->category_type }} </td>
+                  <td> {{ $item->transction_type }} </td>
                   <td>
                     <div class="actions ml-3">
                         <a href="#" class="action-item customModal" data-toggle="modal" data-target="#editModal" data-category="{{ $item }}" data-original-title="Edit">
@@ -64,7 +64,7 @@
                     </div>
                     <div class="form-group">
                         <label for="editCategoryType">Category Type</label>
-                        <select name="category_type" id="editCategoryType" class="form-select" required>
+                        <select name="transction_type" id="editCategoryType" class="form-select" required>
                             <option value="income">Income</option>
                             <option value="expense">Expense</option>
                         </select>
@@ -95,8 +95,8 @@
                         <input type="text" id="category_name" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="category_type">Category Type</label>
-                        <select id="category_type" class="form-select" required>
+                        <label for="transction_type">Category Type</label>
+                        <select id="transction_type" class="form-select" required>
                             <option value="income">Income</option>
                             <option value="expense">Expense</option>
                         </select>
@@ -123,7 +123,7 @@
                 data: {
                     _token: "{{ csrf_token() }}",
                     category_name: $('#category_name').val(),
-                    category_type: $('#category_type').val()
+                    transction_type: $('#transction_type').val()
                 },
                 success: function(response) {
 
@@ -150,7 +150,7 @@
             var category = $(this).data('category');
             $('#editCategoryId').val(category.id);
             $('#editCategoryName').val(category.category_name);
-            $('#editCategoryType').val(category.category_type);
+            $('#editCategoryType').val(category.transction_type);
             $('#editModal').modal('show');
         });
 
@@ -184,7 +184,7 @@
         $('.deleteCategory').click(function(e) {
             e.preventDefault();
             var categoryId = $(this).data('category-id');
-            var deleteButton = $(this); 
+            var deleteButton = $(this);
 
             $.ajax({
                 url: "{{ route('categories.destroy', '') }}" + '/' + categoryId,

@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+
+    
     public function index()
 
     {
@@ -19,13 +21,13 @@ class CategoryController extends Controller
     {
         $validatedData = $request->validate([
             'category_name' => 'required|string|max:255',
-            'category_type' => 'required|in:income,expense',
+            'transction_type' => 'required|in:income,expense',
         ]);
 
         $category = new Category();
         $category->category_name = $validatedData['category_name'];
         $category->slug          = Str::slug($category->category_name);
-        $category->category_type = $validatedData['category_type'];
+        $category->transction_type = $validatedData['transction_type'];
         $category->save();
 
 
@@ -40,14 +42,14 @@ class CategoryController extends Controller
 
         $request->validate([
             'category_name' => 'required|string',
-            'category_type' => 'required|in:income,expense',
+            'transction_type' => 'required|in:income,expense',
         ]);
 
 
         $category->update([
             'category_name' => $request->input('category_name'),
             'slug'          => Str::slug($request->input('category_name')),
-            'category_type' => $request->input('category_type'),
+            'transction_type' => $request->input('transction_type'),
         ]);
 
 

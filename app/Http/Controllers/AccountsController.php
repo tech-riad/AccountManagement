@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Accounts;
 use App\Models\Bank;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class AccountsController extends Controller
         $product  = Product::all();
         $bank     = Bank::all();
         $accounts = Accounts::all();
-        return view('backend.account.index',compact('product','bank','accounts'));
+        $categories = Category::all();
+        return view('backend.account.index',compact('product','bank','accounts','categories'));
     }
 
 
@@ -76,6 +78,16 @@ class AccountsController extends Controller
         $account->delete();
 
         return response()->json(['message' => 'Account Method deleted successfully']);
+    }
+
+    public function getTransactionTypes(Request $request, $categoryId)
+    {
+
+        $category = Category::findOrFail($categoryId);
+
+        return response()->json([
+            'category' => $category,
+        ]);
     }
 
 }

@@ -77,13 +77,13 @@
                     <input type="hidden" name="transction_id" id="editTransctionId">
                     <div class="row">
                         <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for="editTransctionType">Transction Type</label>
-                            <select name="transaction_type" id="editTransctionType" class="form-select" required>
-                                <option value="income">Income</option>
-                                <option value="expense">Expense</option>
-                            </select>
-                        </div>
+                            <div class="form-group">
+                                <label for="editTransctionType">Transction Type</label>
+                                <select name="transaction_type" id="editTransctionType" class="form-select" >
+                                    <option value="income">Income</option>
+                                    <option value="expense">Expense</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col-lg-6">
                                 <div class="form-group">
@@ -117,7 +117,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="editCreatedBy">Created By</label>
-                                <input type="text" name="created_by" id="editCreatedBy" class="form-control" value="{{Auth::user()->name}}" readonly>
+                                <input  type="text" name="created_by" id="editCreatedBy" class="form-control" value="{{Auth::user()->name}}" readonly>
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -177,15 +177,30 @@
                 <form>
                     @csrf
                     <div class="row">
+
+
                         <div class="col-lg-6">
-                         <div class="form-group">
-                            <label for="transctionType">Transction Type</label>
-                            <select name="transaction_type" id="transctionType" class="form-select" required>
-                                <option value="income">Income</option>
-                                <option value="expense">Expense</option>
-                            </select>
-                         </div>
+                            <div class="form-group">
+                                <label for="categoryId">Category Name</label>
+                                <select name="category_id" id="categoryId" class="form-select" required>
+                                    <option value="">Select Category</option>
+                                    @foreach ($categories as $item)
+                                        <option value="{{ $item->id }}">{{ $item->category_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="transactionTypeId">Transaction Type</label>
+                                <select name="transaction_type_id" id="transactionTypeId" class="form-control ">
+                                    <option value="income" id="trxIncome">Income</option>
+                                    <option value="expense" id="trxExpense">Expense</option>
+                                </select>
+                            </div>
+                        </div>
+
+
                         <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="bankaAccountMethod">Transction Method Method</label>
@@ -215,7 +230,7 @@
                                 <input type="number" id="amount" name="amount" class="form-control" required>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 d-none">
                             <div class="form-group">
                                 <label for="created_by">Created By</label>
                                 <input type="text" name="created_by" id="createdBy" class="form-control" value="{{Auth::user()->name}}" readonly>
@@ -269,6 +284,36 @@
 @push('js')
 <!-- Include jQuery library if not already included -->
 {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+
+<script>
+   $(document).ready(function () {
+    $('#categoryId').change(function () {
+        var categoryId = $(this).val();
+        $.ajax({
+            url: '/getTransactionTypes/' + categoryId,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('#transactionTypeId').attr('disabled',true);
+                $('#trxIncome').attr('selected',false);
+                $('#trxExpense').attr('selected',false);
+
+                if (data.category.transction_type == 'income') {
+                    $('#trxIncome').attr('selected',true);
+                }
+                if (data.category.transction_type == 'expense') {
+                    $('#trxExpense').attr('selected',true);
+                }
+
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+});
+
+</script>
 
 <script>
     $(document).ready(function() {
