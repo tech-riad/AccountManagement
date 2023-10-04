@@ -24,7 +24,7 @@ class ProductController extends Controller
 
             $product = new Product();
             $product->product_name = $validatedData['product_name'];
-            $product->slug = Str::slug($product->product_name);
+            $product->slug         = Str::slug($product->product_name);
             $product->save();
 
             return response()->json(['message' => 'Product created successfully', 'product' => $product], 201);
@@ -39,12 +39,12 @@ class ProductController extends Controller
 
                 // Update product data
                 $product->product_name = $request->input('product_name');
-                $product->slug = Str::slug($request->input('product_name'));
+                $product->slug         = Str::slug($request->input('product_name'));
                 $product->save();
 
                 return response()->json(['message' => 'Product updated successfully']);
             } catch (\Exception $e) {
-                return response()->json(['error' => 'An error occurred while updating the product.'], 500);
+                return response()->json(['error'   => 'An error occurred while updating the product.'], 500);
             }
         }
 

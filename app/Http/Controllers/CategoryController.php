@@ -24,10 +24,10 @@ class CategoryController extends Controller
 
         $category = new Category();
         $category->category_name = $validatedData['category_name'];
-        $category->slug = Str::slug($category->category_name);
+        $category->slug          = Str::slug($category->category_name);
         $category->category_type = $validatedData['category_type'];
         $category->save();
-        
+
 
         return response()->json(['message' => 'Category created successfully', 'category' => $category], 201);
     }

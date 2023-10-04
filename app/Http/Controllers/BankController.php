@@ -22,7 +22,7 @@ class BankController extends Controller
 
         $bank = new Bank();
         $bank->method_name = $validatedData['method_name'];
-        $bank->slug = Str::slug($bank->method_name);
+        $bank->slug        = Str::slug($bank->method_name);
         $bank->save();
 
         return response()->json(['message' => 'BAnk created successfully', 'bank' => $bank], 201);
@@ -37,7 +37,7 @@ class BankController extends Controller
 
 
         $bank->update([
-            'method_name' => $request->input('method_name'),
+            'method_name'   => $request->input('method_name'),
             'slug'          => Str::slug($request->input('method_name')),
         ]);
 
