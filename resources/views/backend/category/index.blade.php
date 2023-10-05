@@ -4,47 +4,51 @@
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">All Category</h4>
-            <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw " data-bs-toggle="modal" data-bs-target="#addModal">Add Category</button>
+            <div class="card-body">
+                <h4 class="card-title">All Category</h4>
+                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw " data-bs-toggle="modal"
+                    data-bs-target="#addModal">Add Category</button>
 
-            <table id="example" class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th> Category </th>
-                  <th> Type </th>
-                  <th> Action </th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($category as $item)
-                <tr>
-                  <td> {{ $item->category_name }} </td>
-                  <td> {{ $item->transction_type }} </td>
-                  <td>
-                    <div class="actions ml-3">
-                        <a href="#" class="action-item customModal" data-toggle="modal" data-target="#editModal" data-category="{{ $item }}" data-original-title="Edit">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="#" class="action-item deleteCategory" data-category-id="{{ $item->id }}" data-original-title="Delete">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
+                <table id="example" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th> Category </th>
+                            <th> Type </th>
+                            <th> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($category as $item)
+                            <tr>
+                                <td> {{ $item->category_name }} </td>
+                                <td> {{ $item->transction_type }} </td>
+                                <td>
+                                    <div class="actions ml-3">
+                                        <a href="#" class="action-item customModal" data-toggle="modal"
+                                            data-target="#editModal" data-category="{{ $item }}"
+                                            data-original-title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="#" class="action-item deleteCategory"
+                                            data-category-id="{{ $item->id }}" data-original-title="Delete">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
 
-                    </div>
-                  </td>
-                </tr>
-                @endforeach
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
 
 
-              </tbody>
-            </table>
-          </div>
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
+    </div>
 </div>
 
 
-  <!-- Modal -->
+<!-- Modal -->
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -78,134 +82,135 @@
 </div>
 
 
-  <!-- Modal -->
-  <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addModalLabel">Category Add</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="card-body">
-                <form>
-                    @csrf
-                    <div class="form-group">
-                        <label for="category_name">Category Name</label>
-                        <input type="text" id="category_name" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="transction_type">Category Type</label>
-                        <select id="transction_type" class="form-select" required>
-                            <option value="income">Income</option>
-                            <option value="expense">Expense</option>
-                        </select>
-                    </div>
-                    <button type="button" id="createCategory" class="btn btn-primary">Create Category</button>
-                </form>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Category Add</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <form>
+                        @csrf
+                        <div class="form-group">
+                            <label for="category_name">Category Name</label>
+                            <input type="text" id="category_name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="transction_type">Category Type</label>
+                            <select id="transction_type" class="form-select" required>
+                                <option value="income">Income</option>
+                                <option value="expense">Expense</option>
+                            </select>
+                        </div>
+                        <button type="button" id="createCategory" class="btn btn-primary">Create Category</button>
+                    </form>
 
+                </div>
             </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
 @endsection
 
 @push('js')
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
-<script>
-    $(document).ready(function() {
-        $('#createCategory').on('click', function() {
-            $.ajax({
-                url: "{{ route('admin.categories.store') }}",
-                method: 'POST',
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    category_name: $('#category_name').val(),
-                    transction_type: $('#transction_type').val()
-                },
-                success: function(response) {
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    <script>
+        $(document).ready(function () {
+            $('#createCategory').on('click', function () {
+                $.ajax({
+                    url: "{{ route('admin.categories.store') }}",
+                    method: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        category_name: $('#category_name').val(),
+                        transction_type: $('#transction_type').val()
+                    },
+                    success: function (response) {
 
-                    toastr.success('Categories Created Successfully');
-                    setTimeout(function() {
-                        location.reload();
-                    }, 2000);
+                        toastr.success('Categories Created Successfully');
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
 
-                    $('#addModal').modal('hide');
+                        $('#addModal').modal('hide');
 
-                },
-                error: function(error) {
-                    console.error(error);
-                }
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
             });
         });
-    });
-</script>
 
-<script>
-    $(document).ready(function() {
-        $('.customModal').click(function(e) {
-            e.preventDefault();
-            var category = $(this).data('category');
-            $('#editCategoryId').val(category.id);
-            $('#editCategoryName').val(category.category_name);
-            $('#editCategoryType').val(category.transction_type);
-            $('#editModal').modal('show');
-        });
+    </script>
 
-        $('#updateCategoryBtn').click(function() {
-            var formData = $('#editCategoryForm').serialize();
-            var categoryId = $('#editCategoryId').val();
+    <script>
+        $(document).ready(function () {
+            $('.customModal').click(function (e) {
+                e.preventDefault();
+                var category = $(this).data('category');
+                $('#editCategoryId').val(category.id);
+                $('#editCategoryName').val(category.category_name);
+                $('#editCategoryType').val(category.transction_type);
+                $('#editModal').modal('show');
+            });
+
+            $('#updateCategoryBtn').click(function () {
+                var formData = $('#editCategoryForm').serialize();
+                var categoryId = $('#editCategoryId').val();
 
 
-            $.ajax({
-                url: "/admin/categories/" + categoryId,
-                method: 'PUT',
-                data: formData,
-                success: function(response) {
-                    toastr.success('Categories Updated Successfully');
-                    setTimeout(function() {
-                        location.reload();
-                    }, 2000);
-                    $('#editModal').modal('hide');
-                },
-                error: function(error) {
-                    console.error(error);
-                }
+                $.ajax({
+                    url: "/admin/categories/" + categoryId,
+                    method: 'PUT',
+                    data: formData,
+                    success: function (response) {
+                        toastr.success('Categories Updated Successfully');
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+                        $('#editModal').modal('hide');
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
             });
         });
-    });
 
-</script>
+    </script>
 
-<script>
-    $(document).ready(function() {
-        $('.deleteCategory').click(function(e) {
-            e.preventDefault();
-            var categoryId = $(this).data('category-id');
-            var deleteButton = $(this);
+    <script>
+        $(document).ready(function () {
+            $('.deleteCategory').click(function (e) {
+                e.preventDefault();
+                var categoryId = $(this).data('category-id');
+                var deleteButton = $(this);
 
-            $.ajax({
-                url: "{{ route('categories.destroy', '') }}" + '/' + categoryId,
-                method: 'DELETE',
-                data: {
-                    _token: "{{ csrf_token() }}"
-                },
-                success: function(response) {
-                    toastr.warning('Category Deleted Successfully');
-                    setTimeout(function() {
-                        deleteButton.closest('tr').remove();
-                    }, 2000);
-                },
-                error: function(error) {
-                    console.error(error);
-                }
+                $.ajax({
+                    url: "{{ route('categories.destroy', '') }}" +
+                        '/' + categoryId,
+                    method: 'DELETE',
+                    data: {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function (response) {
+                        toastr.warning('Category Deleted Successfully');
+                        setTimeout(function () {
+                            deleteButton.closest('tr').remove();
+                        }, 2000);
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
             });
         });
-    });
-</script>
+
+    </script>
 
 @endpush
-
-
