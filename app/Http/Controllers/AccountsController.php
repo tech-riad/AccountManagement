@@ -31,7 +31,6 @@ class AccountsController extends Controller
             'payment_date'       => 'required|date',
             'amount'             => 'required|numeric',
             'created_by'         => 'required|string|max:255',
-            'received_by'        => 'required|string|max:255',
             'employee_name'      => 'required|exists:employees,id',
             'description'        => 'nullable|string',
             'status'             => 'in:paid,canceled,pending',
@@ -45,7 +44,6 @@ class AccountsController extends Controller
         $transaction->payment_date      = $validatedData['payment_date'];
         $transaction->amount            = $validatedData['amount'];
         $transaction->created_by        = $validatedData['created_by'];
-        $transaction->received_by       = $validatedData['received_by'];
         $transaction->employee_name      = $validatedData['employee_name'];
         $transaction->status            = $validatedData['status'];
         $transaction->description       = $validatedData['description'];
@@ -65,11 +63,13 @@ class AccountsController extends Controller
             'payment_date'       => 'required|date',
             'amount'             => 'required|numeric',
             'created_by'         => 'required|string|max:255',
-            'received_by'        => 'required|string|max:255',
-            'employee_name'       => 'required|exists:employees,id',
+            'employee_name'      => 'required|exists:employees,id',
             'description'        => 'nullable|string',
             'status'             => 'in:paid,canceled,pending',
         ]);
+
+        $category =Category::findOrFail($request->category_id);
+        $validatedData['transaction_type'] = $category->transction_type;
 
         $account->update($validatedData);
 

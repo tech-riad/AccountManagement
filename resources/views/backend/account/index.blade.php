@@ -86,7 +86,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="transactionTypeId">Transaction Type</label>
-                                    <select name="transaction_type_id" id="transactionTypeId" class="form-control ">
+                                    <select name="transaction_type" id="transactionTypeId" class="form-control ">
                                         <option value="income" id="trxIncome">Income</option>
                                         <option value="expense" id="trxExpense">Expense</option>
                                     </select>
@@ -126,13 +126,7 @@
                                     <input type="text" name="created_by" id="createdBy" class="form-control" value="{{ Auth::user()->name }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="received_by">Transaction By</label>
-                                    <input type="text" id="receivedBy" name="received_by" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="employeeName">Employee Name</label>
                                     <select name="employee_name" id="employeeName" class="form-select" required>
@@ -198,7 +192,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="editTransactionType">Transaction Type</label>
-                                    <select name="transaction_type" id="editTransactionType" class="form-control">
+                                    <select name="transaction_type" id="editTransactionType" class="form-control" >
                                         <option value="income" id="editTrxIncome">Income</option>
                                         <option value="expense" id="editTrxExpense">Expense</option>
                                     </select>
@@ -238,13 +232,7 @@
                                     <input type="text" name="created_by" id="editCreatedBy" class="form-control" value="{{ Auth::user()->name }}" readonly>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="editReceivedBy">Transaction By</label>
-                                    <input type="text" id="editReceivedBy" name="received_by" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="etitEmployeeName">Employee Name</label>
                                     <select name="employee_name" id="etitEmployeeName" class="form-select" required>
@@ -258,9 +246,9 @@
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" id="statusType" class="form-select">
-                                        <option value="pending">Pending</option>
-                                        <option value="paid">Paid</option>
-                                        <option value="canceled">Canceled</option>
+                                        <option id="editStatus_pending"  value="pending">Pending</option>
+                                        <option id="editStatus_paid" value="paid">Paid</option>
+                                        <option id="editStatus_canceled" value="canceled">Canceled</option>
                                     </select>
                                 </div>
                             </div>
@@ -309,12 +297,17 @@
             }
         });
     });
+
 });
 </script>
 <script>
+
+
     // Add Transaction
     $(document).ready(function() {
+        // $('#transactionType').attr('disabled', true);
         $('#createTransaction').on('click', function() {
+            // $('#transactionType, #editTransactionType').attr('disabled', true);
             var formData = $('#addTransactionForm').serialize();
 
             $.ajax({
@@ -343,21 +336,21 @@
 
         $('#editTransactionId').val(transaction.id);
         $('#editCategoryId').val(transaction.category_id);
+        $('#editTransactionType').val(transaction.transaction_type);
         $('#editBankaAccountMethod').val(transaction.account_method);
         $('#editCustomerName').val(transaction.customer_name);
         $('#editPaymentDate').val(transaction.payment_date);
         $('#editAmount').val(transaction.amount);
-        $('#editReceivedBy').val(transaction.received_by);
         $('#etitEmployeeName').val(transaction.employee_name);
-        $('#statusType').val(transaction.status);
+        $('#editStatus_'+ transaction.status).attr('selected',true);
         $('#editDescription').val(transaction.description);
 
-        $('#editTransactionType').val(transaction.transaction_type);
 
         $('#editModal').modal('show');
     });
 
         $('#editTransaction').click(function() {
+            $('#editTransactionType').attr('disabled', false);
             var formData = $('#editTransactionForm').serialize();
             var transactionId = $('#editTransactionId').val();
 

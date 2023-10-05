@@ -20,7 +20,6 @@ return new class extends Migration
             $table->date('payment_date');
             $table->decimal('amount', 10, 2);
             $table->string('created_by');
-            $table->string('received_by');
             $table->longtext('description')->nullable();
             $table->unsignedBigInteger('employee_name')->nullable();
             $table->enum('status', ['paid', 'canceled','pending'])->default('pending');
