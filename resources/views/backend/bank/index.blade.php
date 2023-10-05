@@ -32,8 +32,6 @@
                   </td>
                 </tr>
                 @endforeach
-
-
               </tbody>
             </table>
           </div>
@@ -163,7 +161,7 @@
     $('.deleteBank').click(function(e) {
         e.preventDefault();
         var bankId = $(this).data('bank-id');
-        var deleteButton = $(this); 
+        var deleteButton = $(this);
 
         $.ajax({
             url: "{{ route('bank.destroy', '') }}" + '/' + bankId,

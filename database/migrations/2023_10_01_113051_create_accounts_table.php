@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('category_id');
+            $table->enum('transaction_type', ['income', 'expense']);
             $table->unsignedBigInteger('account_method');
             $table->string('customer_name');
-            $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('transaction_type_id')->nullable();
             $table->date('payment_date');
             $table->decimal('amount', 10, 2);
             $table->string('created_by');

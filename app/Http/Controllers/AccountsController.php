@@ -24,6 +24,7 @@ class AccountsController extends Controller
     {
 
         $validatedData = $request->validate([
+            'category_id'        => 'required|string',
             'transaction_type'   => 'required|in:income,expense',
             'account_method'     => 'required|exists:banks,id',
             'customer_name'      => 'required|string|max:255',
@@ -37,6 +38,7 @@ class AccountsController extends Controller
         ]);
 
         $transaction = new Accounts();
+        $transaction->category_id       = $validatedData['category_id'];
         $transaction->transaction_type  = $validatedData['transaction_type'];
         $transaction->account_method    = $validatedData['account_method'];
         $transaction->customer_name     = $validatedData['customer_name'];
@@ -56,16 +58,17 @@ class AccountsController extends Controller
     public function update(Request $request, Accounts $account)
     {
         $validatedData = $request->validate([
-            'transaction_type'  => 'required|in:income,expense',
-            'account_method'    => 'required|exists:banks,id',
-            'customer_name'     => 'required|string|max:255',
-            'payment_date'      => 'required|date',
-            'amount'            => 'required|numeric',
-            'created_by'        => 'required|string|max:255',
-            'received_by'       => 'required|string|max:255',
-            'product_name'      => 'required|exists:products,id',
-            'description'       => 'nullable|string',
-            'status'            => 'in:paid,canceled,pending',
+            'category_id'        => 'required|string',
+            'transaction_type'   => 'required|in:income,expense',
+            'account_method'     => 'required|exists:banks,id',
+            'customer_name'      => 'required|string|max:255',
+            'payment_date'       => 'required|date',
+            'amount'             => 'required|numeric',
+            'created_by'         => 'required|string|max:255',
+            'received_by'        => 'required|string|max:255',
+            'product_name'       => 'required|exists:products,id',
+            'description'        => 'nullable|string',
+            'status'             => 'in:paid,canceled,pending',
         ]);
 
         $account->update($validatedData);
