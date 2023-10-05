@@ -13,7 +13,7 @@
                         <tr>
                             <th>Date</th>
                             <th>Customer Name</th>
-                            <th>Product Name</th>
+                            <th>Employee Name</th>
                             <th>Account Method</th>
                             <th>Amount</th>
                             <th>Transaction Type</th>
@@ -26,7 +26,7 @@
                         <tr>
                             <td>{{ @$item->payment_date }}</td>
                             <td>{{ @$item->customer_name }}</td>
-                            <td>{{ @$item->product->product_name }}</td>
+                            <td>{{ @$item->employee->employee_name }}</td>
                             <td>{{ @$item->bank->method_name }}</td>
                             <td>{{ @$item->amount }}</td>
                             <td>{{ @$item->transaction_type }}</td>
@@ -134,10 +134,10 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="productName">Product Name</label>
-                                    <select name="product_name" id="productName" class="form-select" required>
-                                        @foreach($product as $item)
-                                        <option value="{{ $item->id }}">{{ $item->product_name }}</option>
+                                    <label for="employeeName">Employee Name</label>
+                                    <select name="employee_name" id="employeeName" class="form-select" required>
+                                        @foreach($employee as $item)
+                                        <option value="{{ $item->id }}">{{ $item->employee_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -246,10 +246,10 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="etitProductName">Product Name</label>
-                                    <select name="product_name" id="etitProductName" class="form-select" required>
-                                        @foreach($product as $item)
-                                        <option value="{{ $item->id }}">{{ $item->product_name }}</option>
+                                    <label for="etitEmployeeName">Employee Name</label>
+                                    <select name="employee_name" id="etitEmployeeName" class="form-select" required>
+                                        @foreach($employee as $item)
+                                        <option value="{{ $item->id }}">{{ $item->employee_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -348,7 +348,7 @@
         $('#editPaymentDate').val(transaction.payment_date);
         $('#editAmount').val(transaction.amount);
         $('#editReceivedBy').val(transaction.received_by);
-        $('#etitProductName').val(transaction.product_name);
+        $('#etitEmployeeName').val(transaction.employee_name);
         $('#statusType').val(transaction.status);
         $('#editDescription').val(transaction.description);
 

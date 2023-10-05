@@ -14,8 +14,8 @@ class Accounts extends Model
     {
         return $this->belongsTo(Bank::class, 'account_method', 'id');
     }
-    public function product()
+    public function employee()
     {
-        return $this->belongsTo(Product::class,'product_name','id');
+        return $this->belongsTo(Employee::class,'employee_name','id');
     }
 }

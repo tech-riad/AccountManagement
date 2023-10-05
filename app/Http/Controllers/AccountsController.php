@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Accounts;
 use App\Models\Bank;
 use App\Models\Category;
-use App\Models\Product;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class AccountsController extends Controller
 {
     public function index()
     {
-        $product  = Product::all();
+        $employee  = Employee::all();
         $bank     = Bank::all();
         $accounts = Accounts::all();
         $categories = Category::all();
-        return view('backend.account.index',compact('product','bank','accounts','categories'));
+        return view('backend.account.index',compact('employee','bank','accounts','categories'));
     }
 
 
@@ -32,7 +32,7 @@ class AccountsController extends Controller
             'amount'             => 'required|numeric',
             'created_by'         => 'required|string|max:255',
             'received_by'        => 'required|string|max:255',
-            'product_name'       => 'required|exists:products,id',
+            'employee_name'      => 'required|exists:employees,id',
             'description'        => 'nullable|string',
             'status'             => 'in:paid,canceled,pending',
         ]);
@@ -46,7 +46,7 @@ class AccountsController extends Controller
         $transaction->amount            = $validatedData['amount'];
         $transaction->created_by        = $validatedData['created_by'];
         $transaction->received_by       = $validatedData['received_by'];
-        $transaction->product_name      = $validatedData['product_name'];
+        $transaction->employee_name      = $validatedData['employee_name'];
         $transaction->status            = $validatedData['status'];
         $transaction->description       = $validatedData['description'];
 
@@ -66,7 +66,7 @@ class AccountsController extends Controller
             'amount'             => 'required|numeric',
             'created_by'         => 'required|string|max:255',
             'received_by'        => 'required|string|max:255',
-            'product_name'       => 'required|exists:products,id',
+            'employee_name'       => 'required|exists:employees,id',
             'description'        => 'nullable|string',
             'status'             => 'in:paid,canceled,pending',
         ]);

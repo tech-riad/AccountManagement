@@ -4,7 +4,7 @@
 use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/getTransactionTypes/{categoryId}', [AccountsController::class, 'getTransactionTypes'])->name('admin.getTransactionTypes');
@@ -17,12 +17,12 @@ Route::prefix('admin')->group(function () {
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
-// Product
+// employee
 
-    Route::get('/products', [ProductController::class, 'index'])->name('admin.products');
-    Route::post('/products/store', [ProductController::class, 'store'])->name('admin.products.store');
-    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
-    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::get('/employees', [EmployeeController::class, 'index'])->name('admin.employees');
+    Route::post('/employees/store', [EmployeeController::class, 'store'])->name('admin.employees.store');
+    Route::put('/employees/{employee}', [EmployeeController::class, 'update'])->name('employees.update');
+    Route::delete('/employees/{employee}', [EmployeeController::class, 'destroy'])->name('employees.destroy');
 
 // Bank
 

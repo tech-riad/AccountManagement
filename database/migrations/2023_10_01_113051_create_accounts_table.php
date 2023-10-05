@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('created_by');
             $table->string('received_by');
             $table->longtext('description')->nullable();
-            $table->unsignedBigInteger('product_name')->nullable();
+            $table->unsignedBigInteger('employee_name')->nullable();
             $table->enum('status', ['paid', 'canceled','pending'])->default('pending');
             $table->timestamps();
 
