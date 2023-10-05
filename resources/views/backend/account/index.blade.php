@@ -85,6 +85,7 @@
                                             <option value="{{ $item->id }}">{{ $item->category_name }}</option>
                                         @endforeach
                                     </select>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -94,6 +95,7 @@
                                         <option value="income" id="trxIncome">Income</option>
                                         <option value="expense" id="trxExpense">Expense</option>
                                     </select>
+                                    {{-- <input type="text" name="transaction_type" id="transactionTypeId" value="" class="form-control" readonly> --}}
                                 </div>
                             </div>
                             <div class="col-lg-6">
